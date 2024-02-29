@@ -5,7 +5,7 @@ import generateTokenAndSetCookie from "../utils/generateToken.js";
 //Login,Signup,Log out controllers
 export const login = async (req, res) => {
    try{
-    const { username, password} = req.body;
+    const { username, password } = req.body;
     const user = await User.findOne({username});
     const isPasswordCorrect= await bcrypt.compare(password, user?.password || "");
 
@@ -26,11 +26,17 @@ export const login = async (req, res) => {
     console.log("Error in login controller", error.message);
         res.status(500).json({error: "Internal Server Error."});
    }
-}
+};
 
-export const logout = async (req, res) => {
-    res.send("Logout User Route");
-}
+export const logout = (req, res) => {
+  try {
+      res.cookie("jwt","",{maxAge:0});
+      res.status(200).json({message: "Logged out sucessfuly."});
+  } catch (error) {
+    console.log("Error in logout controller", error.message);
+        res.status(500).json({error: "Internal Server Error."});
+  }
+};
 
 export const signup = async (req, res) => {
     console.log(req.body);
