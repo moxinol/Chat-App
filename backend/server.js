@@ -1,5 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
+import  cookieParser from "cookie-parser"
 import dotenv from "dotenv";
 
 import authRoutes from "./routes/auth.routes.js";
@@ -9,6 +10,7 @@ import connectToMongoDB from "./DB/connectToMongoDB.js";
 const app = express();
 //midleware to parse body
 app.use(bodyParser.json());
+app.use(cookieParser());
 //Get port from dotenv file or use 5000 if not present in dotenv file
 const PORT = process.env.PORT || 5000;
 
